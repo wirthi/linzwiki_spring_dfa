@@ -1,19 +1,11 @@
 package at.wirthi.learningspring.dm;
 
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DepartureMonitor {
@@ -23,6 +15,7 @@ public class DepartureMonitor {
     public static void main(String argv[]) {
         nextDeparturesForStop("WIFI%20Linz%20AG");
         nextDeparturesForStop("Linz%2FDonau%2C%20Taubenmarkt");
+        nextDeparturesForStop("Linz%2FDonau%2C%20Aloisianum");
     }
 
     public static void errorAndTerminate(String reason, String xml) {
@@ -50,14 +43,19 @@ public class DepartureMonitor {
         String sessionID = first.substring(idxSessionStart, idxSessionEnd);
         System.out.println("Session: "+sessionID);
 
-        //&locationServerActive=1
-        String urlDepRequest = "http://linzag.at/static/XML_DM_REQUEST?sessionID=" + sessionID + "&requestID=1&type_dm=any&dmLineSelectionAll=1&command=dmNext";
+        String urlDepRequest = "http://linzag.at/static/XML_DM_REQUEST?sessionID=" + sessionID + "&requestID=1&dmLineSelectionAll=1";
         String second = readStringFromURL(urlDepRequest);
 
         System.out.println("=======================================");
         System.out.println(second);
 
-        List<Departure> departures = nextDeparturesForInput(second);
+        DMState state = DMState.create(second);
+        if (state.isPlaceIdentified()) {
+            System.out.println("identified");
+        } else {
+            System.out.println("not identified");
+        }
+        List<Departure> departures = state.nextDepartures();
         System.out.println("done analyzing");
         return departures;
     }
@@ -68,60 +66,6 @@ public class DepartureMonitor {
         } catch (UnsupportedEncodingException ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    public static List<Departure> nextDeparturesForInput(String input) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = factory.newDocumentBuilder();
-            Document doc = db.parse(new ByteArrayInputStream(input.getBytes()));
-
-            NodeList nl = doc.getElementsByTagName("itdDeparture");
-            List<Departure> departures = new ArrayList<>(10);
-
-            for (int i = 0; i < nl.getLength(); i++) {
-                if (nl.item(i).getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
-                    org.w3c.dom.Element itdDeparture = (org.w3c.dom.Element) nl.item(i);
-
-                    String countdown = itdDeparture.getAttribute("countdown");
-
-                    System.out.println("======");
-                    System.out.println(countdown);
-
-                    NodeList servingLines = itdDeparture.getElementsByTagName("itdServingLine");
-                    String lineNumber = getItem(servingLines, "number");
-                    String direction = getItem(servingLines, "direction");
-
-                    System.out.println(lineNumber);
-                    System.out.println(direction);
-
-                    departures.add(new Departure(stoi(countdown), stoi(lineNumber), direction));
-                }
-            }
-            return departures;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    private static int stoi(String s) {
-        try {
-            return Integer.parseInt(s);
-        } catch (Exception ex) {
-            System.out.println("cannot parse as integer: " + s);
-            ex.printStackTrace();
-            return -1;
-        }
-    }
-
-    private static String getItem(NodeList nl, String name) {
-        Node node = nl.item(0).getAttributes().getNamedItem(name);
-        if (node == null) {
-            return "";
-        }
-        Attr attr = (org.w3c.dom.Attr) node;
-        return attr.getValue();
     }
 
     private static String readStringFromURL(String urlString) {
