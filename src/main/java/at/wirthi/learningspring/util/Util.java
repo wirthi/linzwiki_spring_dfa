@@ -4,10 +4,18 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.*;
+
 public class Util {
     private Util() {
 
     }
+
+    public static final String USER_AGENT = "Mozilla/5.0";
 
     public static int stoi(String s) {
         try {
@@ -28,4 +36,50 @@ public class Util {
         return attr.getValue();
     }
 
+
+    public static void errorAndTerminate(String reason, String xml) {
+        System.out.println("********************************************");
+        System.out.println(xml);
+        System.out.println("********************************************");
+        System.out.println("Error: " + reason);
+        System.out.println("********************************************");
+        System.exit(0);
+    }
+
+    public static String urlencode(String stopName) {
+        try {
+            return URLEncoder.encode(stopName,"UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public static String readStringFromURL(String urlString) {
+        try {
+            URL url = new URI(urlString).toURL();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("User-Agent", Util.USER_AGENT);
+
+            int responseCode = con.getResponseCode();
+            System.out.println("GET Response Code :: " + responseCode);
+
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer content = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            in.close();
+
+            con.disconnect();
+
+            return content.toString();
+        } catch (IOException ex) {
+            return ex.getMessage();
+        } catch (URISyntaxException ex) {
+            return ex.getMessage();
+        }
+    }
 }

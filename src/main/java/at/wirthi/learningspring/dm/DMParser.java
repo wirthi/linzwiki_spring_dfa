@@ -1,45 +1,17 @@
 package at.wirthi.learningspring.dm;
 
+import at.wirthi.learningspring.linzagdata.Response;
 import at.wirthi.learningspring.util.Util;
-import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.ls.DOMImplementationLS;
-import org.w3c.dom.ls.LSSerializer;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DMState {
+public class DMParser {
 
-    private final Document doc;
-
-    private DMState(Document doc) {
-        this.doc = doc;
-    }
-
-    public static DMState create(String input) {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = factory.newDocumentBuilder();
-
-            DMState state = new DMState(db.parse(new ByteArrayInputStream(input.getBytes())));
-            return state;
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            return null;
-        }
-    }
-
-    public Document getDocument() {
-        return doc;
-    }
-
-    public boolean isPlaceIdentified() {
+    public static boolean isPlaceIdentified(Response response) {
         //<itdOdvPlace state="identified" method="itp">
-        NodeList nl = doc.getElementsByTagName("itdOdvPlace");
+        NodeList nl = response.getDocument().getElementsByTagName("itdOdvPlace");
         System.out.println("found itdOdvPlace: "+nl.getLength());
         for (int i=0;i<nl.getLength();i++) {
             if (nl.item(i).getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
@@ -52,9 +24,9 @@ public class DMState {
         return false;
     }
 
-    public List<Departure> nextDepartures() {
+    public static List<Departure> nextDepartures(Response response) {
         try {
-            NodeList nl = doc.getElementsByTagName("itdDeparture");
+            NodeList nl = response.getDocument().getElementsByTagName("itdDeparture");
             List<Departure> departures = new ArrayList<>(10);
 
             for (int i = 0; i < nl.getLength(); i++) {
