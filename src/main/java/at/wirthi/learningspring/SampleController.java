@@ -31,7 +31,7 @@ public class SampleController {
             if (dep.getCountdown() <= Config.dpMinuteRange) {
                 count++;
                 String targetStop = NameTable.getPublicName(dep.getDirection());
-                departures += "<li>in " + dep.getCountdown() + " min: " + Util.linzWikiLink("Linie " + dep.getLineNumber()) + " nach " + Util.linzWikiLink("Haltestelle "+targetStop) + "</li>";
+                departures += "<li>in " + dep.getCountdown() + " min: " + Util.linzWikiLink("Linie " + dep.getLineNumber()) + " nach " + Util.linzWikiLink("Haltestelle " + targetStop) + "</li>";
             }
         }
         if (count == 0) {
