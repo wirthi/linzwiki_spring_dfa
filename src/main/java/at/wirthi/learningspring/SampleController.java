@@ -4,6 +4,8 @@ import at.wirthi.learningspring.dm.Departure;
 import at.wirthi.learningspring.dm.DepartureMonitor;
 import at.wirthi.learningspring.nametable.NameTable;
 import at.wirthi.learningspring.stopsearch.StopSearch;
+import at.wirthi.learningspring.util.Config;
+import at.wirthi.learningspring.util.Util;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,11 +25,19 @@ public class SampleController {
     String dm(@RequestParam("name") String name) { //  localhost:8080/dm?name=WIFI%20Linz%20AG
         System.out.println("name: " + name);
         List<Departure> list = DepartureMonitor.nextDeparturesForStop(name);
-        String departures = "<html><body>List of next departures: <ul>";
+        String departures = "<html><body>Nächste fahrplanmäßige Abfahrten: <ul>";
+        int count = 0;
         for (Departure dep : list) {
-            departures += "<li>in " + dep.getCountdown() + " min: [[Linie " + dep.getLineNumber() + "]] nach [[Haltestelle " + NameTable.getPublicName(dep.getDirection()) + "]]</li>";
+            if (dep.getCountdown() <= Config.dpMinuteRange) {
+                count++;
+                String targetStop = NameTable.getPublicName(dep.getDirection());
+                departures += "<li>in " + dep.getCountdown() + " min: " + Util.linzWikiLink("Linie " + dep.getLineNumber()) + " nach " + Util.linzWikiLink("Haltestelle "+targetStop) + "</li>";
+            }
         }
-        departures += "</ul></body></html>";
+        if (count == 0) {
+            departures += "in den nächsten " + Config.dpMinuteRange + " Minuten keine Abfahrten";
+        }
+        departures += "</ul><b>Achtung</b>: Fahrplanzeiten! Keine Echtzeitdaten.</body></html>";
         return departures;
     }
 

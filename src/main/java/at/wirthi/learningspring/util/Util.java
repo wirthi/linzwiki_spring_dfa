@@ -48,7 +48,7 @@ public class Util {
 
     public static String urlencode(String stopName) {
         try {
-            return URLEncoder.encode(stopName,"UTF-8");
+            return URLEncoder.encode(stopName, "UTF-8");
         } catch (UnsupportedEncodingException ex) {
             throw new RuntimeException(ex);
         }
@@ -81,5 +81,9 @@ public class Util {
         } catch (URISyntaxException ex) {
             return ex.getMessage();
         }
+    }
+
+    public static String linzWikiLink(String target) {
+        return "<a href=\"https://www.linzwiki.at/wiki/" + urlencode(target) + "\">" + target + "</a>";
     }
 }
