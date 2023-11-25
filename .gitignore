@@ -1,1 +1,4 @@
 target/
+importCertificate.sh
+*.crt
+*.p12
