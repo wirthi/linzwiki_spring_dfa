@@ -6,4 +6,4 @@ server:
     key-store-type: PKCS12
     key-alias: tomcat
     port: 8443
-    enabled: false
+    enabled: false #local testing!!! for native-image and server, change to true
