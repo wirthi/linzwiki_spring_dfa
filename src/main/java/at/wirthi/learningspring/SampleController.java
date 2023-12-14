@@ -25,19 +25,19 @@ public class SampleController {
     String dm(@RequestParam("name") String name) { //  localhost:8080/dm?name=WIFI%20Linz%20AG
         System.out.println("name: " + name);
         List<Departure> list = DepartureMonitor.nextDeparturesForStop(name);
-        String departures = "<html><body>Nächste fahrplanmäßige Abfahrten: <ul>";
+        String departures = "<html><head><link rel=\"stylesheet\" href=\"https://www.linzwiki.at/w/load.php?lang=de-at&amp;modules=site.styles&amp;only=styles&amp;skin=vector\"/></head><body>Nächste fahrplanmäßige Abfahrten: <br />";
         int count = 0;
         for (Departure dep : list) {
             if (dep.getCountdown() <= Config.dpMinuteRange) {
                 count++;
                 String targetStop = NameTable.getPublicName(dep.getDirection());
-                departures += "<li>in " + dep.getCountdown() + " min: " + Util.linzWikiLink("Linie " + dep.getLineNumber()) + " nach " + Util.linzWikiLink("Haltestelle " + targetStop) + "</li>";
+                departures += "in " + dep.getCountdown() + " min: " + Util.linzWikiLink("Linie " + dep.getLineNumber(), "_top") + " nach " + Util.linzWikiLink("Haltestelle " + targetStop, "_top") + "<br />";
             }
         }
         if (count == 0) {
-            departures += "in den nächsten " + Config.dpMinuteRange + " Minuten keine Abfahrten";
+            departures += "in den nächsten " + Config.dpMinuteRange + " Minuten keine Abfahrten<br />";
         }
-        departures += "</ul><b>Achtung</b>: Fahrplanzeiten! Keine Echtzeitdaten.</body></html>";
+        departures += "<br /><b>Achtung</b>: Fahrplanzeiten! Keine Echtzeitdaten.</body></html>";
         return departures;
     }
 

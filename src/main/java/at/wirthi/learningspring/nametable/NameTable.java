@@ -41,6 +41,35 @@ public class NameTable {
         stationMap.put("Linz/Donau St. Margarethen", "Margarethen");
         stationMap.put("Linz/Donau Stadion", "Stadion");
         stationMap.put("Linz/Donau Taubenmarkt", "Taubenmarkt");
+
+        //linie 27
+        stationMap.put("Linz/Donau Chemiepark", "Chemiepark");
+        stationMap.put("Linz/Donau Schiffswerft", "Schiffswerft");
+
+        //linie 41
+        stationMap.put("Linz/Donau Hessenplatz", "Hessenplatz");
+        stationMap.put("Linz/Donau Baintwiese", "Baintwiese");
+
+        //linie 43
+        stationMap.put("Traun OÖ Stadtfriedhof Linz", "Stadtfriedhof");
+
+        //linie 45, 46
+        stationMap.put("Linz/Donau Froschberg", "Froschberg");
+        stationMap.put("Linz/Donau Ziegeleistraße", "Ziegeleistraße");
+        stationMap.put("Linz/Donau Hafen", "Hafen");
+        stationMap.put("Linz/Donau Stieglbauernstraße", "Stieglbauernstraße");
+        stationMap.put("Linz/Donau Hauptbahnhof", "Hauptbahnhof");
+
+        //linie 107
+        stationMap.put("Linz/Donau Hatschekstraße", "Hatschekstraße");
+
+        //linie 191
+        stationMap.put("Traun OÖ St. Martin", "St. Martin");
+        stationMap.put("Leonding Gaumberg", "Gaumberg");
+
+        //linie 192
+        stationMap.put("Linz/Donau Theatergasse", "Theatergasse");
+        stationMap.put("Leonding Stadtplatz Leonding", "Stadtplatz Leonding");
     }
 
     public static String getPublicName(String internalName) {
