@@ -83,12 +83,12 @@ public class Util {
         }
     }
 
-    public static String linzWikiLink(String href) {
-        return linzWikiLink(href, null);
+    public static String linzWikiLink(String href, String caption) {
+        return linzWikiLink(href, caption, null);
     }
 
-    public static String linzWikiLink(String href, String target) {
+    public static String linzWikiLink(String href, String caption, String target) {
         String fTarget = target == null ? "" : "target=\"" + target + "\"";
-        return "<a href=\"https://www.linzwiki.at/wiki/" + urlencode(href) + "\" " + fTarget + ">" + href + "</a>";
+        return "<a href=\"https://www.linzwiki.at/wiki/" + urlencode(href) + "\" " + fTarget + ">" + caption + "</a>";
     }
 }
