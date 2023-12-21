@@ -2,6 +2,7 @@ package at.wirthi.learningspring;
 
 import at.wirthi.learningspring.dm.Departure;
 import at.wirthi.learningspring.dm.DepartureMonitor;
+import at.wirthi.learningspring.dm.DepartureResponse;
 import at.wirthi.learningspring.nametable.NameTable;
 import at.wirthi.learningspring.stopsearch.LinzAGStop;
 import at.wirthi.learningspring.stopsearch.StopSearch;
@@ -20,7 +21,8 @@ public class SampleController {
      * Digitale Fahrplan-Information. Station eingeben, nächste Abfahrten erhalten.
      *
      * @param paramName Stationsname oder Straßenname
-     * @param detailed  wenn leer oder false, dann Kurzversion, sonst lange
+     * @param paramStopID eindeutige ID der LinzAG
+     * @param paramDetailed  wenn leer oder false, dann Kurzversion, sonst lange
      * @return Auskunft über die nächsten Abfahrten an dieser Haltestelle
      */
     @RequestMapping("/dm")
@@ -35,26 +37,40 @@ public class SampleController {
         int minuteLimit = detailed ? 120 : Config.dpMinuteRange;
         int countLimit = detailed ? Integer.MAX_VALUE : Config.dpCountLimit;
 
-        List<Departure> list = DepartureMonitor.nextDeparturesForStop(paramName, paramStopID);
-        String departures = "<html><head><link rel=\"stylesheet\" href=\"https://www.linzwiki.at/w/load.php?lang=de-at&amp;modules=site.styles&amp;only=styles&amp;skin=vector\"/></head><body>Fahrplanmäßige Abfahrten " + paramName + ": <br />";
+        DepartureResponse response = DepartureMonitor.nextDeparturesForStop(paramName, paramStopID);
+        String departures = "<html><head><link rel=\"stylesheet\" href=\"https://www.linzwiki.at/w/load.php?lang=de-at&amp;modules=site.styles&amp;only=styles&amp;skin=vector\"/></head><body>";
         int count = 0;
-        for (Departure dep : list) {
-            if (dep.getCountdown() <= minuteLimit && count < countLimit) {
-                count++;
-                String targetStop = NameTable.getPublicName(dep.getDirection());
-                String line = "Linie " + dep.getLineNumber();
-                String stopHref = "Haltestelle " + targetStop;
-                String stopCaption = "Hst " + targetStop;
-                departures += "in " + dep.getCountdown() + " min: " + Util.linzWikiLink(line, line, "_top") + " Richtung " + Util.linzWikiLink(stopHref, stopCaption, "_top") + "<br />";
+        if (response.isStopIdentified() && response.getList() != null) {
+            departures += "<b>Fahrplanmäßige</b> Abfahrten <b>" + paramName + "</b><br /><br />";
+            for (Departure dep : response.getList()) {
+                if (dep.getCountdown() <= minuteLimit && count < countLimit) {
+                    count++;
+                    String targetStop = NameTable.getPublicName(dep.getDirection());
+                    String line = "Linie " + dep.getLineNumber();
+                    String stopHref = "Haltestelle " + targetStop;
+                    String stopCaption = targetStop;
+                    departures += "in " + dep.getCountdown() + " m " + Util.linzWikiLink(line, line, "_top") + " nach " + Util.linzWikiLink(stopHref, stopCaption, "_top") + "<br />";
+                }
             }
-        }
-        if (count == 0) {
-            departures += "in den nächsten " + minuteLimit + " Minuten keine Abfahrten<br />";
-        }
-        if (detailed) {
-            // options to select here
+            if (count == 0) {
+                departures += "in den nächsten " + minuteLimit + " Minuten keine Abfahrten<br />";
+            }
+            if (detailed) {
+                // options to select here
+                departures += "<a href=\"#\" onclick=\"window.parent.location.reload(true)\">AKTUALISIEREN</a> ";
+                departures += "<br />";
+            } else {
+                departures += "<a href=\"#\" onclick=\"window.parent.location.reload(true)\">AKTUALISIEREN</a> ";
+                departures += "<a href=\"dm?name=" + Util.sanitize(paramName) + "&stopID=" + Util.sanitize(paramStopID) + "&detailed=true\" target=\"_blank\">mehr Details</a> ";
+                departures += "<br />";
+            }
         } else {
-            departures += "<a href=\"dm?name=" + paramName + "&stopID=" + paramStopID + "&detailed=true\" target=\"_blank\">mehr Details</a><br />";
+            List<LinzAGStop> list = StopSearch.analyzeResponse(response.getResponseStr());
+            departures += "Haltestelle nicht eindeutig identifiziert. Möglichkeiten:<br /><ul>";
+            for (LinzAGStop stop : list) {
+                departures += "<li><a href=\"dm?stopID=" + Util.sanitize(stop.getStopID()) + "&name=" + Util.sanitize(stop.getName()) + "\">" + stop.getName() + "</a></li>";
+            }
+            departures += "</ul>";
         }
         departures += "<br /><b>Achtung</b>: Fahrplanzeiten! Keine Echtzeitdaten.</body></html>";
         return departures;
@@ -72,7 +88,7 @@ public class SampleController {
         List<LinzAGStop> list = StopSearch.searchForStop(name);
         String answer = "<html><body>You searched for <b>" + name + "</b>, possible locations are: <ul>";
         for (LinzAGStop stop : list) {
-            answer += "<li><a href=\"dm?stopID=" + Util.sanitize(stop.getStopID()) + "&name=" + Util.sanitize(stop.getName()) + "\">" + stop.getName() + "</a> (stopID: " + stop.getStopID() + ")</li>";
+            answer += "<li><a href=\"dm?stopID=" + Util.sanitize(stop.getStopID()) + "&name=" + Util.sanitize(stop.getName()) + "\">" + stop.getName() + "</a></li>";
         }
         answer += "</ul></body></html>";
         return answer;

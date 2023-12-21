@@ -25,6 +25,9 @@ public class NameTable {
         stationMap.put("Leonding Im Bäckerfeld", "Im Bäckerfeld"); //Einrücker in die Remise
         stationMap.put("Leonding Doblerholz", "Doblerholz"); //Einrücker in die Remise
 
+        //linie 12
+        stationMap.put("Linz/Donau Karlhof", "Karlhof");
+
         //Linie 17
         stationMap.put("Linz/Donau Industriezeile", "Industriezeile");
         stationMap.put("Hitzing", "Hitzing"); //why no location?

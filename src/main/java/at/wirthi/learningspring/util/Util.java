@@ -94,6 +94,9 @@ public class Util {
     // goal is to sanitize this so that we don't forward bullshit data.
     public static String sanitize(String value) {
         String s = value;
+        if (s == null) {
+            s = "";
+        }
         if (s.length() > 50) {
             s = s.substring(0, 50);
             System.out.println("SANITIZED: too long: " + s);
