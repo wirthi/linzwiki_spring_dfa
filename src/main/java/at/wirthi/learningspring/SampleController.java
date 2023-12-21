@@ -55,12 +55,13 @@ public class SampleController {
             if (count == 0) {
                 departures += "in den nächsten " + minuteLimit + " Minuten keine Abfahrten<br />";
             }
+            departures += "<br />";
             if (detailed) {
                 // options to select here
-                departures += "<a href=\"#\" onclick=\"window.parent.location.reload(true)\">AKTUALISIEREN</a> ";
+                departures += "<a href=\"#\" onclick=\"location.reload(true)\">AKTUALISIEREN</a> ";
                 departures += "<br />";
             } else {
-                departures += "<a href=\"#\" onclick=\"window.parent.location.reload(true)\">AKTUALISIEREN</a> ";
+                departures += "<a href=\"#\" onclick=\"location.reload(true)\">AKTUALISIEREN</a> ";
                 departures += "<a href=\"dm?name=" + Util.sanitize(paramName) + "&stopID=" + Util.sanitize(paramStopID) + "&detailed=true\" target=\"_blank\">mehr Details</a> ";
                 departures += "<br />";
             }
