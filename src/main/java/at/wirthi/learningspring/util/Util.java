@@ -64,8 +64,7 @@ public class Util {
             int responseCode = con.getResponseCode();
             System.out.println("GET Response Code :: " + responseCode);
 
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(con.getInputStream()));
+            BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
             StringBuffer content = new StringBuffer();
             while ((inputLine = in.readLine()) != null) {
@@ -90,5 +89,15 @@ public class Util {
     public static String linzWikiLink(String href, String caption, String target) {
         String fTarget = target == null ? "" : "target=\"" + target + "\"";
         return "<a href=\"https://www.linzwiki.at/wiki/" + urlencode(href) + "\" " + fTarget + ">" + caption + "</a>";
+    }
+
+    // goal is to sanitize this so that we don't forward bullshit data.
+    public static String sanitize(String value) {
+        String s = value;
+        if (s.length() > 50) {
+            s = s.substring(0, 50);
+            System.out.println("SANITIZED: too long: " + s);
+        }
+        return s;
     }
 }

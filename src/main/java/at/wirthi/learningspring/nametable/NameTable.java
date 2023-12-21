@@ -16,6 +16,7 @@ public class NameTable {
         stationMap.put("Linz/Donau solarCity", "solarCity");
         stationMap.put("Linz/Donau Auwiesen", "Auwiesen");
         stationMap.put("Linz/Donau JKU I Universität", "JKU Universität");
+        stationMap.put("Linz/Donau Remise Kleinmünchen", "Remise Kleinmünchen");
 
         //linie 3, 4
         stationMap.put("Linz/Donau Landgutstraße", "Landgutstraße");
@@ -36,6 +37,9 @@ public class NameTable {
         stationMap.put("Linz/Donau Pichling", "Pichling");
         stationMap.put("Linz/Donau Pichlinger See", "Pichlinger See");
         stationMap.put("Linz/Donau Fernheizkraftwerk", "Fernheizkraftwerk");
+
+        //linie 23
+        stationMap.put("Linz/Donau Kopernikusstraße", "Kopernikusstraße");
 
         //linie 26
         stationMap.put("Linz/Donau St. Margarethen", "Margarethen");
@@ -59,6 +63,10 @@ public class NameTable {
         stationMap.put("Linz/Donau Hafen", "Hafen");
         stationMap.put("Linz/Donau Stieglbauernstraße", "Stieglbauernstraße");
         stationMap.put("Linz/Donau Hauptbahnhof", "Hauptbahnhof");
+
+        //linie 50
+        stationMap.put("Linz/Donau Pöstlingberg", "Pöstlingberg");
+        stationMap.put("Linz/Donau Hauptplatz", "Hauptplatz");
 
         //linie 107
         stationMap.put("Linz/Donau Hatschekstraße", "Hatschekstraße");

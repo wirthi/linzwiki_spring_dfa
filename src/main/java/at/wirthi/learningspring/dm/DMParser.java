@@ -12,12 +12,12 @@ public class DMParser {
     public static boolean isPlaceIdentified(Response response) {
         //<itdOdvPlace state="identified" method="itp">
         NodeList nl = response.getDocument().getElementsByTagName("itdOdvPlace");
-        System.out.println("found itdOdvPlace: "+nl.getLength());
-        for (int i=0;i<nl.getLength();i++) {
+        System.out.println("found itdOdvPlace: " + nl.getLength());
+        for (int i = 0; i < nl.getLength(); i++) {
             if (nl.item(i).getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
                 org.w3c.dom.Element itdOdvPlace = (org.w3c.dom.Element) nl.item(i);
                 String state = itdOdvPlace.getAttribute("state");
-                System.out.println("state: "+state);
+                System.out.println("state: " + state);
                 return state.equalsIgnoreCase("identified");
             }
         }
@@ -35,15 +35,11 @@ public class DMParser {
 
                     String countdown = itdDeparture.getAttribute("countdown");
 
-                    System.out.println("======");
-                    System.out.println(countdown);
-
                     NodeList servingLines = itdDeparture.getElementsByTagName("itdServingLine");
                     String lineNumber = Util.getItem(servingLines, "number");
                     String direction = Util.getItem(servingLines, "direction");
 
-                    System.out.println(lineNumber);
-                    System.out.println(direction);
+                    System.out.println(countdown + " " + lineNumber + " " + direction);
 
                     departures.add(new Departure(Util.stoi(countdown), Util.stoi(lineNumber), direction));
                 }

@@ -25,16 +25,17 @@ public class SampleController {
      */
     @RequestMapping("/dm")
     String dm(
-            @RequestParam("name") String paramName,
+            @RequestParam(name = "name") String paramName,
+            @RequestParam(name = "stopID", required = false) String paramStopID,
             @RequestParam(name = "detailed", required = false) String paramDetailed
     ) { //  localhost:8080/dm?name=WIFI%20Linz%20AG
-        System.out.println("name: " + paramName);
+        System.out.println("name: " + paramName + " stopID: " + paramStopID);
         boolean detailed = !(paramDetailed == null || paramDetailed.equals("false"));
 
         int minuteLimit = detailed ? 120 : Config.dpMinuteRange;
         int countLimit = detailed ? Integer.MAX_VALUE : Config.dpCountLimit;
 
-        List<Departure> list = DepartureMonitor.nextDeparturesForStop(paramName);
+        List<Departure> list = DepartureMonitor.nextDeparturesForStop(paramName, paramStopID);
         String departures = "<html><head><link rel=\"stylesheet\" href=\"https://www.linzwiki.at/w/load.php?lang=de-at&amp;modules=site.styles&amp;only=styles&amp;skin=vector\"/></head><body>Fahrplanmäßige Abfahrten " + paramName + ": <br />";
         int count = 0;
         for (Departure dep : list) {
@@ -53,7 +54,7 @@ public class SampleController {
         if (detailed) {
             // options to select here
         } else {
-            departures += "<a href=\"dm?name=" + paramName + "&detailed=true\" target=\"_blank\">mehr Details</a><br />";
+            departures += "<a href=\"dm?name=" + paramName + "&stopID=" + paramStopID + "&detailed=true\" target=\"_blank\">mehr Details</a><br />";
         }
         departures += "<br /><b>Achtung</b>: Fahrplanzeiten! Keine Echtzeitdaten.</body></html>";
         return departures;
@@ -71,7 +72,7 @@ public class SampleController {
         List<LinzAGStop> list = StopSearch.searchForStop(name);
         String answer = "<html><body>You searched for <b>" + name + "</b>, possible locations are: <ul>";
         for (LinzAGStop stop : list) {
-            answer += "<li><a href=\"dm?stopID=" + stop.getStopID() + "\">" + stop.getName() + "</a> (stopID: " + stop.getStopID() + ")</li>";
+            answer += "<li><a href=\"dm?stopID=" + Util.sanitize(stop.getStopID()) + "&name=" + Util.sanitize(stop.getName()) + "\">" + stop.getName() + "</a> (stopID: " + stop.getStopID() + ")</li>";
         }
         answer += "</ul></body></html>";
         return answer;
