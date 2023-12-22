@@ -103,4 +103,13 @@ public class Util {
         }
         return s;
     }
+
+    public static String getHTMLHeader() {
+        String s = "<html><head>";
+        s += "<meta http-equiv=\"Cache-Control\" content=\"no-cache, no-store, must-revalidate\" />";
+        s += "<meta http-equiv=\"Expires\" content=\"0\" />";
+        s += "<meta http-equiv=\"Pragma\" content=\"no-cache\" />";
+        s += "<link rel=\"stylesheet\" href=\"https://www.linzwiki.at/w/load.php?lang=de-at&amp;modules=site.styles&amp;only=styles&amp;skin=vector\"/></head>";
+        return s;
+    }
 }

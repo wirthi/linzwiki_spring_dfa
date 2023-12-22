@@ -20,9 +20,9 @@ public class SampleController {
     /**
      * Digitale Fahrplan-Information. Station eingeben, nächste Abfahrten erhalten.
      *
-     * @param paramName Stationsname oder Straßenname
-     * @param paramStopID eindeutige ID der LinzAG
-     * @param paramDetailed  wenn leer oder false, dann Kurzversion, sonst lange
+     * @param paramName     Stationsname oder Straßenname
+     * @param paramStopID   eindeutige ID der LinzAG
+     * @param paramDetailed wenn leer oder false, dann Kurzversion, sonst lange
      * @return Auskunft über die nächsten Abfahrten an dieser Haltestelle
      */
     @RequestMapping("/dm")
@@ -38,7 +38,8 @@ public class SampleController {
         int countLimit = detailed ? Integer.MAX_VALUE : Config.dpCountLimit;
 
         DepartureResponse response = DepartureMonitor.nextDeparturesForStop(paramName, paramStopID);
-        String departures = "<html><head><link rel=\"stylesheet\" href=\"https://www.linzwiki.at/w/load.php?lang=de-at&amp;modules=site.styles&amp;only=styles&amp;skin=vector\"/></head><body>";
+        String departures = Util.getHTMLHeader();
+        departures += "<body>";
         int count = 0;
         if (response.isStopIdentified() && response.getList() != null) {
             departures += "<b>Fahrplanmäßige</b> Abfahrten <b>" + paramName + "</b><br /><br />";
@@ -73,7 +74,11 @@ public class SampleController {
             }
             departures += "</ul>";
         }
-        departures += "<br /><b>Achtung</b>: Fahrplanzeiten! Keine Echtzeitdaten.</body></html>";
+        departures += "<br /><b>Achtung</b>: Fahrplanzeiten! Keine Echtzeitdaten.";
+        if (detailed) {
+            departures += "<p>&copy; 2023 <a href=\"https://www.linzwiki.at\">LinzWiki.at</a>; basiert auf Daten der Linz AG via <a href=\"https://data.linz.gv.at\">data.linz.gv.at</a></p>";
+        }
+        departures += "</body></html>";
         return departures;
     }
 
@@ -87,7 +92,8 @@ public class SampleController {
     String stop(@RequestParam("name") String name) { //  localhost:8080/stop?name=WIFI%20Linz%20AG
         System.out.println("name: " + name);
         List<LinzAGStop> list = StopSearch.searchForStop(name);
-        String answer = "<html><body>You searched for <b>" + name + "</b>, possible locations are: <ul>";
+        String answer = Util.getHTMLHeader();
+        answer += "<body>You searched for <b>" + name + "</b>, possible locations are: <ul>";
         for (LinzAGStop stop : list) {
             answer += "<li><a href=\"dm?stopID=" + Util.sanitize(stop.getStopID()) + "&name=" + Util.sanitize(stop.getName()) + "\">" + stop.getName() + "</a></li>";
         }
