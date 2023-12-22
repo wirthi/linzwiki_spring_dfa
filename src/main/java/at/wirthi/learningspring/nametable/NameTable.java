@@ -25,6 +25,9 @@ public class NameTable {
         stationMap.put("Leonding Im Bäckerfeld", "Im Bäckerfeld"); //Einrücker in die Remise
         stationMap.put("Leonding Doblerholz", "Doblerholz"); //Einrücker in die Remise
 
+        //linie 11
+        stationMap.put("Linz/Donau Wegscheider Straße", "Wegscheider Straße");
+
         //linie 12
         stationMap.put("Linz/Donau Karlhof", "Karlhof");
 
@@ -41,8 +44,9 @@ public class NameTable {
         stationMap.put("Linz/Donau Pichlinger See", "Pichlinger See");
         stationMap.put("Linz/Donau Fernheizkraftwerk", "Fernheizkraftwerk");
 
-        //linie 23
+        //linie 25
         stationMap.put("Linz/Donau Kopernikusstraße", "Kopernikusstraße");
+        stationMap.put("Linz/Donau Oed", "Oed");
 
         //linie 26
         stationMap.put("Linz/Donau St. Margarethen", "Margarethen");
@@ -52,6 +56,13 @@ public class NameTable {
         //linie 27
         stationMap.put("Linz/Donau Chemiepark", "Chemiepark");
         stationMap.put("Linz/Donau Schiffswerft", "Schiffswerft");
+
+        //linie 33
+        stationMap.put("Steyregg Pleschinger See", "Pleschinger See");
+        stationMap.put("Linz/Donau Riesenhof", "Riesenhof");
+
+        //linie 38
+        stationMap.put("Linz/Donau Jäger im Tal", "Jäger im Tal");
 
         //linie 41
         stationMap.put("Linz/Donau Hessenplatz", "Hessenplatz");
@@ -70,6 +81,21 @@ public class NameTable {
         //linie 50
         stationMap.put("Linz/Donau Pöstlingberg", "Pöstlingberg");
         stationMap.put("Linz/Donau Hauptplatz", "Hauptplatz");
+
+        //linie 101
+        stationMap.put("Linz/Donau Urnenhain Urfahr", "Urnenhain Urfahr");
+        stationMap.put("Linz/Donau Aichinger", "Aichinger");
+
+        //linie 102
+        stationMap.put("Linz/Donau Worathweg", "Worathweg");
+        stationMap.put("Linz/Donau Rudolfstraße", "Rudolfstraße");
+
+        //linie 104
+        stationMap.put("Linz/Donau Sennweg", "Sennweg");
+        stationMap.put("Linz/Donau Waldesruh", "Waldesruh");
+
+        //linie 105
+        stationMap.put("Linz/Donau Siriusweg", "Siriusweg");
 
         //linie 107
         stationMap.put("Linz/Donau Hatschekstraße", "Hatschekstraße");
