@@ -32,7 +32,7 @@ public class DepartureMonitor {
         Log.log(responseStr, LogDetail.DETAILED);
 
         Response response = Response.create(responseStr);
-        if (DMParser.isPlaceIdentified(response)) {
+        if (response != null && DMParser.isPlaceIdentified(response)) {
             List<Departure> departures = DMParser.nextDepartures(response);
             return new DepartureResponse(departures, true, responseStr);
         } else {

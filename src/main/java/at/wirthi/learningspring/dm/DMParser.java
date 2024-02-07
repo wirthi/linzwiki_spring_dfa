@@ -12,6 +12,9 @@ import java.util.List;
 public class DMParser {
 
     public static boolean isPlaceIdentified(Response response) {
+        if (response == null) {
+            return false;
+        }
         //<itdOdvPlace state="identified" method="itp">
         NodeList nl = response.getDocument().getElementsByTagName("itdOdvPlace");
         Log.log("found itdOdvPlace: " + nl.getLength(), LogDetail.NORMAL);
@@ -27,6 +30,9 @@ public class DMParser {
     }
 
     public static List<Departure> nextDepartures(Response response) {
+        if (response == null) {
+            return null;
+        }
         try {
             NodeList nl = response.getDocument().getElementsByTagName("itdDeparture");
             List<Departure> departures = new ArrayList<>(10);
