@@ -12,11 +12,47 @@ public class NameTable {
     static {
         stationMap = new HashMap<>();
 
+        //random
+        stationMap.put("Linz/Donau Fadingerstraße", "Fadingerstraße");
+        stationMap.put("Linz/Donau Seidelbastweg", "Seidelbastweg");
+        stationMap.put("Rohrbach b.Linz Wambacherberg", "Wambacherberg");
+        stationMap.put("Linz/Donau Unionkreuzung", "Unionkreuzung");
+        stationMap.put("Linz/Donau Kudlichstraße", "Kudlichstraße");
+        stationMap.put("Steyregg Plesching", "Plensching");
+        stationMap.put("Linz/Donau Neue Heimat", "Neue Heimat");
+        stationMap.put("Linz/Donau Neue Welt", "Neue Welt");
+        stationMap.put("Linz/Donau Prinz-Eugen-Straße", "Prinz-Eugen-Straße");
+        stationMap.put("Leonding Remise Leonding", "Remise Leonding");
+        stationMap.put("Linz/Donau Europaplatz", "Europaplatz");
+        stationMap.put("Linz/Donau Ferihumerstraße", "Ferihumerstraße");
+        stationMap.put("Linz/Donau Florianerstraße", "Florianerstraße");
+        stationMap.put("Linz/Donau Hillerstraße", "Hillerstraße");
+        stationMap.put("Linz/Donau JKU I Universität Nord", "Universität Nord");
+        stationMap.put("Linz/Donau Kudlichstraße", "Kudlichstraße");
+        stationMap.put("Linz/Donau Lederergasse", "Lederergasse");
+        stationMap.put("Linz/Donau Hillerstraße", "Hillerstraße");
+        stationMap.put("Linz/Donau, Lunzerstraße Ost", "Lunzerstraße Ost"); //yes, saw the comma as a response
+        stationMap.put("Linz/Donau Lunzerstraße Ost", "Lunzerstraße Ost");
+        stationMap.put("Linz/Donau Stahlwerk", "Stahlwerk");
+        stationMap.put("Linz/Donau St. Magdalena", "St. Magdalena");
+        stationMap.put("Linz/Donau Südpark Linz", "Südpark Linz");
+
+
+        stationMap.put("Linz/Donau Volksgartenstraße", "Volksgartenstraße");
+        stationMap.put("Linz/Donau Wildbergstraße", "Wildbergstraße");
+        stationMap.put("Linz/Donau Stahlwerk", "Stahlwerk");
+        stationMap.put("Linz/Donau Stahlwerk", "Stahlwerk");
+        stationMap.put("Linz/Donau Stahlwerk", "Stahlwerk");
+        stationMap.put("Linz/Donau Stahlwerk", "Stahlwerk");
+
+
         //Linie 1, 2
         stationMap.put("Linz/Donau solarCity", "solarCity");
         stationMap.put("Linz/Donau Auwiesen", "Auwiesen");
         stationMap.put("Linz/Donau JKU I Universität", "JKU Universität");
         stationMap.put("Linz/Donau Remise Kleinmünchen", "Remise Kleinmünchen");
+        stationMap.put("Linz/Donau Simonystraße", "Simonystraße");
+        stationMap.put("Linz/Donau Sonnensteinstraße", "Sonnensteinstraße");
 
         //linie 3, 4
         stationMap.put("Linz/Donau Landgutstraße", "Landgutstraße");
@@ -27,6 +63,7 @@ public class NameTable {
 
         //linie 11
         stationMap.put("Linz/Donau Wegscheider Straße", "Wegscheider Straße");
+        stationMap.put("Leonding Sporthalle Leonding", "Sporthalle Leonding");
 
         //linie 12
         stationMap.put("Linz/Donau Karlhof", "Karlhof");
@@ -38,6 +75,7 @@ public class NameTable {
 
         //Linie 18
         stationMap.put("Linz/Donau, Turmstraße", "Turmstraße");
+        stationMap.put("Linz/Donau Turmstraße", "Turmstraße");
 
         //Linie 19
         stationMap.put("Linz/Donau Pichling", "Pichling");
@@ -81,6 +119,7 @@ public class NameTable {
         //linie 50
         stationMap.put("Linz/Donau Pöstlingberg", "Pöstlingberg");
         stationMap.put("Linz/Donau Hauptplatz", "Hauptplatz");
+        stationMap.put("Linz/Donau Bruckneruniversität", "Bruckneruniversität");
 
         //linie 101
         stationMap.put("Linz/Donau Urnenhain Urfahr", "Urnenhain Urfahr");
