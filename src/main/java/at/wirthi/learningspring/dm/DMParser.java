@@ -1,6 +1,8 @@
 package at.wirthi.learningspring.dm;
 
 import at.wirthi.learningspring.linzagdata.Response;
+import at.wirthi.learningspring.util.Log;
+import at.wirthi.learningspring.util.LogDetail;
 import at.wirthi.learningspring.util.Util;
 import org.w3c.dom.NodeList;
 
@@ -12,12 +14,12 @@ public class DMParser {
     public static boolean isPlaceIdentified(Response response) {
         //<itdOdvPlace state="identified" method="itp">
         NodeList nl = response.getDocument().getElementsByTagName("itdOdvPlace");
-        System.out.println("found itdOdvPlace: " + nl.getLength());
+        Log.log("found itdOdvPlace: " + nl.getLength(), LogDetail.NORMAL);
         for (int i = 0; i < nl.getLength(); i++) {
             if (nl.item(i).getNodeType() == org.w3c.dom.Node.ELEMENT_NODE) {
                 org.w3c.dom.Element itdOdvPlace = (org.w3c.dom.Element) nl.item(i);
                 String state = itdOdvPlace.getAttribute("state");
-                System.out.println("state: " + state);
+                Log.log("state: " + state, LogDetail.NORMAL);
                 return state.equalsIgnoreCase("identified");
             }
         }
@@ -39,7 +41,7 @@ public class DMParser {
                     String lineNumber = Util.getItem(servingLines, "number");
                     String direction = Util.getItem(servingLines, "direction");
 
-                    System.out.println(countdown + " " + lineNumber + " " + direction);
+                    Log.log(countdown + " " + lineNumber + " " + direction, LogDetail.NORMAL);
 
                     departures.add(new Departure(Util.stoi(countdown), Util.stoi(lineNumber), direction));
                 }

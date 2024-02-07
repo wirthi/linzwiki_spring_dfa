@@ -7,6 +7,8 @@ import at.wirthi.learningspring.nametable.NameTable;
 import at.wirthi.learningspring.stopsearch.LinzAGStop;
 import at.wirthi.learningspring.stopsearch.StopSearch;
 import at.wirthi.learningspring.util.Config;
+import at.wirthi.learningspring.util.Log;
+import at.wirthi.learningspring.util.LogDetail;
 import at.wirthi.learningspring.util.Util;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,7 +33,7 @@ public class SampleController {
             @RequestParam(name = "stopID", required = false) String paramStopID,
             @RequestParam(name = "detailed", required = false) String paramDetailed
     ) { //  localhost:8080/dm?name=WIFI%20Linz%20AG
-        System.out.println("name: " + paramName + " stopID: " + paramStopID);
+        Log.log("name: " + paramName + " stopID: " + paramStopID, LogDetail.NORMAL);
         boolean detailed = !(paramDetailed == null || paramDetailed.equals("false"));
 
         int minuteLimit = detailed ? 120 : Config.dpMinuteRange;
@@ -90,7 +92,7 @@ public class SampleController {
      */
     @RequestMapping("/stop")
     String stop(@RequestParam("name") String name) { //  localhost:8080/stop?name=WIFI%20Linz%20AG
-        System.out.println("name: " + name);
+        Log.log("name: " + name, LogDetail.NORMAL);
         List<LinzAGStop> list = StopSearch.searchForStop(name);
         String answer = Util.getHTMLHeader();
         answer += "<body>You searched for <b>" + name + "</b>, possible locations are: <ul>";

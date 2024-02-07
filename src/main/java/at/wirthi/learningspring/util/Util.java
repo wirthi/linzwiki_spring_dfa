@@ -21,7 +21,7 @@ public class Util {
         try {
             return Integer.parseInt(s);
         } catch (Exception ex) {
-            System.out.println("cannot parse as integer: " + s);
+            Log.log("cannot parse as integer: " + s, LogDetail.NORMAL);
             ex.printStackTrace();
             return -1;
         }
@@ -38,11 +38,11 @@ public class Util {
 
 
     public static void errorAndTerminate(String reason, String xml) {
-        System.out.println("********************************************");
-        System.out.println(xml);
-        System.out.println("********************************************");
-        System.out.println("Error: " + reason);
-        System.out.println("********************************************");
+        Log.log("********************************************", LogDetail.MINIMAL);
+        Log.log(xml, LogDetail.MINIMAL);
+        Log.log("********************************************", LogDetail.MINIMAL);
+        Log.log("Error: " + reason, LogDetail.MINIMAL);
+        Log.log("********************************************", LogDetail.MINIMAL);
         System.exit(0);
     }
 
@@ -62,7 +62,7 @@ public class Util {
             con.setRequestProperty("User-Agent", Util.USER_AGENT);
 
             int responseCode = con.getResponseCode();
-            System.out.println("GET Response Code :: " + responseCode);
+            Log.log("GET Response Code :: " + responseCode, LogDetail.NORMAL);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
@@ -99,7 +99,7 @@ public class Util {
         }
         if (s.length() > 50) {
             s = s.substring(0, 50);
-            System.out.println("SANITIZED: too long: " + s);
+            Log.log("SANITIZED: too long: " + s, LogDetail.NORMAL);
         }
         return s;
     }

@@ -1,5 +1,7 @@
 package at.wirthi.learningspring.linzagdata;
 
+import at.wirthi.learningspring.util.Log;
+import at.wirthi.learningspring.util.LogDetail;
 import org.w3c.dom.Document;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -22,7 +24,7 @@ public class Response {
             Response state = new Response(db.parse(new ByteArrayInputStream(input.getBytes())));
             return state;
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            Log.log(ex.getMessage(), LogDetail.NORMAL);
             return null;
         }
     }
