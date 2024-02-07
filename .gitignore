@@ -1,4 +1,6 @@
 target/
+.idea/
 importCertificate.sh
 *.crt
 *.p12
+
